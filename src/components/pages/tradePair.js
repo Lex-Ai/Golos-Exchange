@@ -1,10 +1,8 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {useLocation, useParams} from "react-router";
-import ScrollContainer from 'react-indiana-drag-scroll'
+import {useParams} from "react-router";
 import {BodyBold, Box, Card, Col, FlexBox, Heading, Row} from "../helpers/global";
 import {TabsWrapper} from "../helpers/tabs";
-import {LoadData, toFixedNum, translateStr, useClassSetter} from "../../utils";
-import {trade} from "../routing/path";
+import {LoadData, translateStr, useClassSetter} from "../../utils";
 import {
     PairDisplay,
     PairParams,
@@ -16,7 +14,7 @@ import {
 } from "../helpers/pages/trade";
 import {ApiRequest} from "../../utils/requests";
 import {
-    fetchUserData,
+    fetchUserData, handleOpenOrders,
     handleOrderBook,
     handleTradeHistory, handleTradingViewData,
     handleUserOrdersByPair,
@@ -41,13 +39,17 @@ const getPairData = async (base, quote) => {
     const rate = lastTradeToRate(base)(lastTrades);
     const ordersHistory = handleTradeHistory(lastTrades, base);
     const orderBook = await apiRequest.getOrderBook(pair).then(handleOrderBook(pair));
+
+    const openOrders = userName
+        ? await apiRequest.getUserOpenOrdersByName(userName, pair).then(handleOpenOrders(pair))
+        : [];
     const userOrders = userName
         ? await apiRequest.getUserOrdersByName(userName).then(handleUserOrdersByPair(pair))
         : [];
 
     const tradingViewData = handleTradingViewData(pair);
 
-    return { ticker, rate, orderBook, userOrders, ordersHistory, tradingViewData };
+    return { ticker, rate, orderBook, userOrders, ordersHistory, tradingViewData, openOrders };
 };
 
 const DesktopDisplay = (props) => {
@@ -142,6 +144,7 @@ const LayoutWrapper = props => {
         return () => {
             window.removeEventListener("resize", resizeListener);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return isMobile ? <MobileDisplay {...props} /> : <DesktopDisplay {...props} />
@@ -157,10 +160,12 @@ const Display = ({userData}) => {
     useEffect(() => {
         if(isLoading) return;
         reloadPage();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pair]);
     useEffect(() => {
         if(isLoading) return;
         reloadData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userData.name]);
     // useEffect(() => {
     //     const interval = setInterval(reloadData, 5000);
@@ -205,7 +210,7 @@ const Display = ({userData}) => {
         <TabsWrapper defaultActiveId={userData.name ? 0 : 2} headingList={ordersTabs}>
             {!!userData.name
                 ? (
-                    <TradeOpenOrders {...defaultHistoryProps} userOrders={data.userOrders} reloadData={reloadDataWithBalance} />
+                    <TradeOpenOrders {...defaultHistoryProps} userOrders={data.openOrders} reloadData={reloadDataWithBalance} />
                 ) : loginBtn
             }
             {!!userData.name

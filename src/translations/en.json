@@ -7,6 +7,14 @@
     "rate": "Rate:",
     "commission": "Comission:"
   },
+  "serverError": {
+    "desc": "Internal Server Error",
+    "btn": "Перезагрузить сайт"
+  },
+  "emptyPage": {
+    "desc": "Страница не найдена",
+    "btn": "На главную"
+  },
   "trade": {
     "title": "Market",
     "changePair": "Change Pair",
@@ -105,6 +113,13 @@
     "title": "History",
     "emptyHistory": "You don't have any trade or transaction type of operations"
   },
+  "assetCreate": {
+    "title": "UIA create",
+    "create": "Create asset",
+    "warning": "You can't change permissions after UIA creation",
+    "price": "Creation price:",
+    "btn": "Create"
+  },
   "settings": {
     "title": "Settings",
     "security": "Security",
@@ -169,7 +184,7 @@
     "quote": "%(quote)s",
     "base": "%(base)s",
     "total": "Total",
-    "lastPrice": "Lost price",
+    "lastPrice": "Last price",
     "change": "Change"
   },
   "fields": {
@@ -190,17 +205,25 @@
     "price": "Price",
     "amount": "Amount",
     "result": "Result",
-    "currency": "Currency"
+    "currency": "Currency",
+    "maxNum": "Max number",
+    "ticker": "Ticker",
+    "precision": "Precision",
+    "tokenIcon": "Ticker image link (48x48)",
+    "tokenDesc": "Ticker description link"
   },
   "selects": {
     "language": "Language",
     "asset": "Asset",
     "assetToBuy": "Buy",
-    "assetToSell": "Sell"
+    "assetToSell": "Sell",
+    "prefix": "Prefix"
   },
   "checkboxes": {
     "passwordSaveWarning": "I have saved my new password securely",
-    "isSell": "Sell"
+    "isSell": "Sell",
+    "allowFee": "Allow fee setting",
+    "allowOverrideTransfer": "Allow revocation of tokens by the issuer"
   },
   "errors": {
     "required": "Required field",
@@ -214,8 +237,17 @@
     "userNotExist": "User does not exist",
     "notEnoughCash": "Insufficient funds",
     "pairNotUnique": "The asset must be unique",
-    "wrongPrecision": "Max. number of characters after the decimal point - %(precision)s",
-    "minAmount": "Min amount - %(minAmount)s"
+    "wrongPrecision": "Precision = %(precision)s",
+    "minAmount": "Min amount - %(minAmount)s",
+    "assetWithoutPrecision": "Precision is required",
+    "wrongMaxPrecisionLength": "Max precision - 8",
+    "wrongMaxNumLength": "Max length - 16",
+    "wrongAssetLength": "Max length - 14",
+    "assetNotUnique": "Token exists",
+    "isNotLink": "Enter URL",
+    "userCantCreateToken": "Not enough GBG",
+    "min": "Min symbols - %(min)s",
+    "onlySymbols": "Only latin chars"
   },
   "fieldMessages": {
     "success": "This is a SUCCESS message"
@@ -228,7 +260,7 @@
     },
     "receive": {
       "title": "Transfer",
-      "description": "Received %(amount)s from user %(to)s"
+      "description": "Received %(amount)s from user %(from)s"
     },
     "limit_order_create": {
       "title": "Order creation",
@@ -284,6 +316,11 @@
     },
     "trx": {
       "title": "Transfer",
+      "desc": "Check the data",
+      "btn": "Confirm"
+    },
+    "newAsset": {
+      "title": "Asset creation",
       "desc": "Check the data",
       "btn": "Confirm"
     }
